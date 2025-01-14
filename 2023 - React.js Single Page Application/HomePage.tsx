@@ -43,6 +43,11 @@ export default function HomePage({ showLogInDialog = false, showSignUpDialog = f
     setAnchorElNav(null);
   }
 
+  useLayoutEffect(() => {
+    // auto login
+    // ...
+  }, [])
+
   function LogInButtons() {
     // ...
   }
