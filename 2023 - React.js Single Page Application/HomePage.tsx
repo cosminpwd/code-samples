@@ -13,7 +13,10 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 
 import { useNavigate } from "react-router-dom";
+
 import { LogoElement, UserAccount } from './topBar';
+import { LogInErrors } from './constants';
+
 
 // ...
 
@@ -27,7 +30,9 @@ const kPages = [ /* ... */ ];
  */
 export default function HomePage({ showLogInDialog = false, showSignUpDialog = false }) {
   // hooks
-  // ...
+  const [openLogInDialog, setOpenLogInDialog] = useState(showLogInDialog || showSignUpDialog);   // show/hide dialog
+  const [showLogInButtons, setShowLogInButtons] = useState(false);                               // show/hide buttons
+  const [showProfile, setShowProfile] = useState(false);
 
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
 
@@ -43,13 +48,49 @@ export default function HomePage({ showLogInDialog = false, showSignUpDialog = f
     setAnchorElNav(null);
   }
 
+  // sign up dialog state (open/closed)
+  const handleSignUp = () => {
+    setOpenLogInDialog(true);
+  }
+
+  // log in dialog state (open/closed)
+  const handleLogIn = () => {
+    setOpenLogInDialog(true);
+  }
+
+  const handleCloseLogInSignUp = () => {
+    setOpenLogInDialog(false);
+  }
+
+  // handle a submit in the log in or sign up dialog (updates the status of the dialog at the end)
+  function handleLogInSignUp(data: FormData, rememberMe: boolean, updateStatus: (status: LogInErrors) => void) {
+  }
+
+  // user profile callbacks
+  const handleLogout = () => {
+    // ...
+  }
+
   useLayoutEffect(() => {
     // auto login
     // ...
   }, [])
 
   function LogInButtons() {
-    // ...
+    if ( !showLogInButtons )
+      return null;
+
+    return (
+      <Box>
+        <Button variant="outlined" onClick={handleSignUp} size="medium" color="secondary" sx={{mr: 1,}}>
+        Sign up
+        </Button>
+        <Button variant="contained" onClick={handleLogIn} size="medium" color="secondary" sx={{mr: 1,}}>
+        Log in
+        </Button>
+        <LogInSignUpDialog open={openLogInDialog} onClose={handleCloseLogInSignUp} onSubmit={handleLogInSignUp}/>
+      </Box>
+    );
   }
 
   return (
